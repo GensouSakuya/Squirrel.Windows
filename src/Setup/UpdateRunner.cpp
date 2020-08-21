@@ -147,7 +147,7 @@ bool CUpdateRunner::DirectoryIsWritable(wchar_t * szPath)
 		return true;
 }
 
-int CUpdateRunner::ExtractUpdaterAndRun(wchar_t* lpCommandLine, bool useFallbackDir, wchar_t* customInstallPath)
+int CUpdateRunner::ExtractUpdaterAndRun(wchar_t* lpCommandLine, bool useFallbackDir, wchar_t* customInstallPath, bool isPerMachine)
 {
 	PROCESS_INFORMATION pi = { 0 };
 	STARTUPINFO si = { 0 };
@@ -167,22 +167,39 @@ int CUpdateRunner::ExtractUpdaterAndRun(wchar_t* lpCommandLine, bool useFallback
 	}
 
 	if (!useFallbackDir) {
-		SHGetFolderPath(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, targetDir);
+		//正常安装
+		if (customInstallPath != NULL)
+		{
+			_swprintf_c(targetDir, _countof(targetDir), L"%s", customInstallPath);
+		}
+		else 
+		{
+			if (isPerMachine)
+			{
+				SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, targetDir);
+			}
+			else 
+			{
+				SHGetFolderPath(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, targetDir);
+			}
+		}
 		goto gotADir;
 	}
 
-	wchar_t username[512];
+	//如果安装失败的话，都安装到C:\ProgramData中
+	//如果是Per-User安装则路径增加用户名
+
 	wchar_t appDataDir[MAX_PATH];
-	ULONG unameSize = _countof(username);
-	if (customInstallPath != NULL)
+	if (isPerMachine)
 	{
-		//todo
+		SHGetFolderPath(NULL, CSIDL_COMMON_APPDATA, NULL, SHGFP_TYPE_CURRENT, appDataDir);
+		_swprintf_c(targetDir, _countof(targetDir), L"%s", appDataDir);
 	}
 	else 
 	{
-		SHGetFolderPath(NULL, CSIDL_COMMON_APPDATA, NULL, SHGFP_TYPE_CURRENT, appDataDir);
+		wchar_t username[512];
+		ULONG unameSize = _countof(username);
 		GetUserName(username, &unameSize);
-
 		_swprintf_c(targetDir, _countof(targetDir), L"%s\\%s", appDataDir, username);
 	}
 
@@ -296,7 +313,7 @@ gotADir:
 failedExtract:
 	if (!useFallbackDir) {
 		// Take another pass at it, using C:\ProgramData instead
-		return ExtractUpdaterAndRun(lpCommandLine, true, NULL);
+		return ExtractUpdaterAndRun(lpCommandLine, true, NULL, isPerMachine);
 	}
 
 	DisplayErrorMessage(CString(L"Failed to extract installer"), NULL);

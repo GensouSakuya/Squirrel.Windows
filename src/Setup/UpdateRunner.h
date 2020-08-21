@@ -8,5 +8,5 @@ public:
 	static HRESULT ShellExecuteFromExplorer(LPWSTR pszFile, LPWSTR pszParameters);
 	static bool DirectoryExists(wchar_t* szPath);
 	static bool DirectoryIsWritable(wchar_t* szPath);
-	static int ExtractUpdaterAndRun(wchar_t* lpCommandLine, bool useFallbackDir, wchar_t* customInstallPath);
+	static int ExtractUpdaterAndRun(wchar_t* lpCommandLine, bool useFallbackDir, wchar_t* customInstallPath, bool isPerMachine);
 };
