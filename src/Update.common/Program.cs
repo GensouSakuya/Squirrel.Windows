@@ -161,7 +161,7 @@ namespace Squirrel.Update
                     animatedGifWindowToken.Cancel();
                     break;
                 case UpdateAction.Uninstall:
-                    Uninstall().Wait();
+                    Uninstall(isPerMachine).Wait();
                     break;
                 case UpdateAction.Download:
                     Console.WriteLine(Download(target).Result);
@@ -334,14 +334,14 @@ namespace Squirrel.Update
             }
         }
 
-        public async Task Uninstall(string appName = null)
+        public async Task Uninstall(string appName = null,bool isPerMachine = false)
         {
             this.Log().Info("Starting uninstall for app: " + appName);
 
             appName = appName ?? getAppNameFromDirectory();
             using (var mgr = new UpdateManager("", appName)) {
                 await mgr.FullUninstall();
-                mgr.RemoveUninstallerRegistryEntry();
+                mgr.RemoveUninstallerRegistryEntry(isPerMachine);
             }
         }
 
