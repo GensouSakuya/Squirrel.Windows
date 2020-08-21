@@ -94,6 +94,7 @@
     <None Include="..\Update.common\Update.com">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\vendor\nuget\src\Core\Core.csproj">
