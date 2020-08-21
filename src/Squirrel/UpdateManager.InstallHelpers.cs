@@ -20,11 +20,13 @@ namespace Squirrel
         {
             readonly string applicationName;
             readonly string rootAppDirectory;
+            private readonly bool isPerMachine;
 
-            public InstallHelperImpl(string applicationName, string rootAppDirectory)
+            public InstallHelperImpl(string applicationName, string rootAppDirectory,bool isPerMachine = false)
             {
                 this.applicationName = applicationName;
                 this.rootAppDirectory = rootAppDirectory;
+                this.isPerMachine = isPerMachine;
             }
 
             const string currentVersionRegSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
@@ -47,9 +49,19 @@ namespace Squirrel
                     RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
                         .CreateSubKey("Uninstall", RegistryKeyPermissionCheck.ReadWriteSubTree)) { ; }
 
-                var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                    .CreateSubKey(uninstallRegSubKey + "\\" + applicationName, RegistryKeyPermissionCheck.ReadWriteSubTree);
-
+                RegistryKey key;
+                if (isPerMachine)
+                {
+                    key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+                            Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32)
+                        .CreateSubKey(uninstallRegSubKey + "\\" + applicationName,
+                            RegistryKeyPermissionCheck.ReadWriteSubTree);
+                }
+                else
+                {
+                    key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
+                        .CreateSubKey(uninstallRegSubKey + "\\" + applicationName, RegistryKeyPermissionCheck.ReadWriteSubTree);
+                }
                 if (zp.IconUrl != null && !File.Exists(targetIco)) {
                     try {
                         using (var wc = Utility.CreateWebClient()) { 
@@ -135,13 +147,24 @@ namespace Squirrel
             public Task<RegistryKey> CreateUninstallerRegistryEntry()
             {
                 var updateDotExe = Path.Combine(rootAppDirectory, "Update.exe");
-                return CreateUninstallerRegistryEntry(String.Format("\"{0}\" --uninstall", updateDotExe), "-s");
+                return CreateUninstallerRegistryEntry(
+                    $"\"{updateDotExe}\" --uninstall {(isPerMachine ? "--per-machine" : string.Empty)}", "-s");
             }
 
             public void RemoveUninstallerRegistryEntry()
             {
-                var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                    .OpenSubKey(uninstallRegSubKey, true);
+                RegistryKey key;
+                if (isPerMachine)
+                {
+                    key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+                            Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32)
+                        .OpenSubKey(uninstallRegSubKey, true);
+                }
+                else
+                {
+                    key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
+                        .OpenSubKey(uninstallRegSubKey, true);
+                }
                 key.DeleteSubKeyTree(applicationName);
             }
         }

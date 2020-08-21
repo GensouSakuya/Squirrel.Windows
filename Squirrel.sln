@@ -33,9 +33,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Update-Mono", "src\Update\U
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StubExecutable", "src\StubExecutable\StubExecutable.vcxproj", "{C028DB2A-E7C5-4232-8C22-D5FBA2176136}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SetupAdmin", "src\SetupAdmin\SetupAdmin.vcxproj", "{CBF9CB36-BC05-441A-87A2-A90EB612CFED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setup.Admin", "src\Setup.Admin\Setup.Admin.vcxproj", "{CBF9CB36-BC05-441A-87A2-A90EB612CFED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Update.PerMachine", "src\Update.PerMachine\Update.PerMachine.csproj", "{D8A99626-24B4-404E-8134-8605FCEEE278}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Update.Admin", "src\Update.Admin\Update.Admin.csproj", "{D8A99626-24B4-404E-8134-8605FCEEE278}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

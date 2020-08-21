@@ -101,13 +101,13 @@ namespace Squirrel
         /// applied package. Uses the built-in Update.exe to handle uninstall.
         /// </summary>
         /// <returns>The registry key that was created</returns>
-        Task<RegistryKey> CreateUninstallerRegistryEntry();
+        Task<RegistryKey> CreateUninstallerRegistryEntry(bool isPerMachine = false);
 
         /// <summary>
         /// Removes the entry in Programs and Features created via 
         /// CreateUninstallerRegistryEntry
         /// </summary>
-        void RemoveUninstallerRegistryEntry();
+        void RemoveUninstallerRegistryEntry(bool isPerMachine = false);
 
         /// <summary>
         /// Create a shortcut on the Desktop / Start Menu for the given 
