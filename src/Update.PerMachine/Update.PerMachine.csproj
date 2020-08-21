@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1EEBACBC-6982-4696-BD4E-899ED0AC6CD2}</ProjectGuid>
+    <ProjectGuid>{D8A99626-24B4-404E-8134-8605FCEEE278}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Squirrel.Update</RootNamespace>
@@ -44,6 +44,7 @@
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="DeltaCompressionDotNet">
       <HintPath>..\..\packages\DeltaCompressionDotNet.1.1.0\lib\net45\DeltaCompressionDotNet.dll</HintPath>
@@ -118,6 +119,9 @@
     <None Include="..\Update.common\rcedit.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

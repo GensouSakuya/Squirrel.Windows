@@ -32,6 +32,7 @@
     <file src="WriteZipToSetup\bin\Release\WriteZipToSetup.exe" target="tools" />
     <file src="StubExecutable\bin\Release\StubExecutable.exe" target="tools" />
     <file src="Update\bin\Release\Update.exe" target="tools\Squirrel.exe" />
+    <file src="Update.PerMachine\bin\Release\Update.exe" target="tools\Squirrel.PerMachine.exe" />
     <file src="Update\bin\Release\Update-Mono.exe" target="tools\Squirrel-Mono.exe" />
     <file src="Update\bin\Release\Update.com" target="tools\Squirrel.com" />
     <file src="SyncReleases\bin\Release\SyncReleases.exe" target="tools" />
