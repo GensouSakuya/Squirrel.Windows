@@ -157,7 +157,7 @@ namespace Squirrel.Update
                         AnimatedGifWindow.ShowWindow(TimeSpan.FromSeconds(4), animatedGifWindowToken.Token, progressSource);
                     }
 
-                    Install(silentInstall, progressSource, Path.GetFullPath(target)).Wait();
+                    Install(silentInstall, progressSource, Path.GetFullPath(target), isPerMachine).Wait();
                     animatedGifWindowToken.Cancel();
                     break;
                 case UpdateAction.Uninstall:
