@@ -199,7 +199,7 @@ namespace Squirrel.Update
             sourceDirectory = sourceDirectory ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var releasesPath = Path.Combine(sourceDirectory, "RELEASES");
 
-            this.Log().Info("Starting install, writing to {0}", sourceDirectory);
+            this.Log().Info("Starting install, writing to {0}, is per machine:{1}", sourceDirectory, isPerMachine);
 
             if (!File.Exists(releasesPath)) {
                 this.Log().Info("RELEASES doesn't exist, creating it at " + releasesPath);

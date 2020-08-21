@@ -87,6 +87,8 @@ namespace Squirrel
                     }
                 }
 
+                this.Log().Info($"Written to {key}");
+
                 var stringsToWrite = new[] {
                     new { Key = "DisplayName", Value = zp.Title ?? zp.Description ?? zp.Summary },
                     new { Key = "DisplayVersion", Value = zp.Version.ToString() },
