@@ -34,8 +34,12 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DeltaCompressionDotNet">
@@ -75,20 +79,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
+      <Link>..\Update.common\Properties\SolutionAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AnimatedGifWindow.cs" />
-    <Compile Include="AuthenticodeTools.cs" />
-    <Compile Include="CopStache.cs" />
-    <Compile Include="Mono.Options\Options.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Update.common\AnimatedGifWindow.cs" />
+    <Compile Include="..\Update.common\AuthenticodeTools.cs" />
+    <Compile Include="..\Update.common\CopStache.cs" />
+    <Compile Include="..\Update.common\Mono.Options\Options.cs" />
+    <Compile Include="..\Update.common\Program.cs" />
+    <Compile Include="..\Update.common\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="app.manifest" />
-    <None Include="packages.config" />
-    <None Include="Update.com">
+    <None Include="..\Update.common\App.config" />
+    <None Include="..\Update.common\packages.config" />
+    <None Include="..\Update.common\Update.com">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -103,12 +106,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="signtool.exe">
+    <None Include="..\Update.common\signtool.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="rcedit.exe">
+    <None Include="..\Update.common\rcedit.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
