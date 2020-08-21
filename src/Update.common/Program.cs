@@ -161,7 +161,7 @@ namespace Squirrel.Update
                     animatedGifWindowToken.Cancel();
                     break;
                 case UpdateAction.Uninstall:
-                    Uninstall(isPerMachine).Wait();
+                    Uninstall(isPerMachine: isPerMachine).Wait();
                     break;
                 case UpdateAction.Download:
                     Console.WriteLine(Download(target).Result);
