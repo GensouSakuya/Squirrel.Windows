@@ -119,7 +119,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// screw you
 
-	exitCode = CUpdateRunner::ExtractUpdaterAndRun(lpCmdLine, false);
+	exitCode = CUpdateRunner::ExtractUpdaterAndRun(lpCmdLine, false, NULL);
 
 out:
 	_Module->Term();
