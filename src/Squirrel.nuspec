@@ -28,6 +28,7 @@
     <file src="squirrel.windows.props" target="build" />
     <file src="squirrel.windows.targets" target="build" />
     <file src="Setup\bin\Release\Setup.exe" target="tools" />
+    <file src="SetupAdmin\bin\Release\SetupAdmin.exe" target="tools" />
     <file src="WriteZipToSetup\bin\Release\WriteZipToSetup.exe" target="tools" />
     <file src="StubExecutable\bin\Release\StubExecutable.exe" target="tools" />
     <file src="Update\bin\Release\Update.exe" target="tools\Squirrel.exe" />
