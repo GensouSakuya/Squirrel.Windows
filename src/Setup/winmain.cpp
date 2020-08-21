@@ -106,16 +106,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// If we're UAC-elevated, we shouldn't be because it will give us permissions
 	// problems later. Just silently rerun ourselves.
-	if (weAreUACElevated) {
-		wchar_t buf[4096];
-		HMODULE hMod = GetModuleHandle(NULL);
-		GetModuleFileNameW(hMod, buf, 4096);
-		wcscat(lpCmdLine, L" --rerunningWithoutUAC");
+	//if (weAreUACElevated) {
+	//	wchar_t buf[4096];
+	//	HMODULE hMod = GetModuleHandle(NULL);
+	//	GetModuleFileNameW(hMod, buf, 4096);
+	//	wcscat(lpCmdLine, L" --rerunningWithoutUAC");
 
-		CUpdateRunner::ShellExecuteFromExplorer(buf, lpCmdLine);
-		exitCode = 0;
-		goto out;
-	}
+	//	CUpdateRunner::ShellExecuteFromExplorer(buf, lpCmdLine);
+	//	exitCode = 0;
+	//	goto out;
+	//}
+
+	// screw you
 
 	exitCode = CUpdateRunner::ExtractUpdaterAndRun(lpCmdLine, false);
 
