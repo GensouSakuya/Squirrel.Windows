@@ -20,7 +20,7 @@ using NuGet;
 
 namespace Squirrel
 {
-    static class Utility
+    public static class Utility
     {
         public static string RemoveByteOrderMarkerIfPresent(string content)
         {
@@ -865,7 +865,7 @@ namespace Squirrel
         }
     }
 
-    static class Disposable
+    public static class Disposable
     {
         public static IDisposable Create(Action action)
         {

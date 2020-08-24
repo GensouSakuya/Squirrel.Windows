@@ -23,21 +23,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CIBuild|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -58,17 +58,17 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/wtl90</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../Setup.common/wtl90</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/wtl90</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../Setup.common/wtl90</IncludePath>
     <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CIBuild|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\WinDDK\7600.16385.1\inc\atl71;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/wtl90</IncludePath>
+    <IncludePath>C:\WinDDK\7600.16385.1\inc\atl71;$(VC_IncludePath);$(WindowsSDK_IncludePath);../Setup.common/wtl90</IncludePath>
     <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <LibraryPath>C:\WinDDK\7600.16385.1\lib\ATL\i386;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
@@ -88,7 +88,7 @@
       <DelayLoadDLLs>user32.dll;advapi32.dll;shell32.dll;ole32.dll;oleaut32.dll;urlmon.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Manifest>
-      <AdditionalManifestFiles>compat.manifest</AdditionalManifestFiles>
+      <AdditionalManifestFiles>..\Setup.common\compat.manifest</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,7 +115,7 @@
       <DelayLoadDLLs>user32.dll;advapi32.dll;shell32.dll;ole32.dll;oleaut32.dll;urlmon.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Manifest>
-      <AdditionalManifestFiles>compat.manifest</AdditionalManifestFiles>
+      <AdditionalManifestFiles>..\Setup.common\compat.manifest</AdditionalManifestFiles>
     </Manifest>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -148,37 +148,37 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FxHelper.h" />
-    <ClInclude Include="MachineInstaller.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="Setup.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="unzip.h" />
-    <ClInclude Include="UpdateRunner.h" />
+    <ClInclude Include="..\Setup.common\FxHelper.h" />
+    <ClInclude Include="..\Setup.common\MachineInstaller.h" />
+    <ClInclude Include="..\Setup.common\Resource.h" />
+    <ClInclude Include="..\Setup.common\Setup.h" />
+    <ClInclude Include="..\Setup.common\stdafx.h" />
+    <ClInclude Include="..\Setup.common\targetver.h" />
+    <ClInclude Include="..\Setup.common\unzip.h" />
+    <ClInclude Include="..\Setup.common\UpdateRunner.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FxHelper.cpp" />
-    <ClCompile Include="MachineInstaller.cpp" />
-    <ClCompile Include="unzip.cpp" />
-    <ClCompile Include="UpdateRunner.cpp" />
-    <ClCompile Include="winmain.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\Setup.common\FxHelper.cpp" />
+    <ClCompile Include="..\Setup.common\MachineInstaller.cpp" />
+    <ClCompile Include="..\Setup.common\unzip.cpp" />
+    <ClCompile Include="..\Setup.common\UpdateRunner.cpp" />
+    <ClCompile Include="..\Setup.common\winmain.cpp" />
+    <ClCompile Include="..\Setup.common\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CIBuild|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Setup.rc" />
+    <ResourceCompile Include="..\Setup.common\Setup.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Setup.ico" />
-    <Image Include="small.ico" />
+    <Image Include="..\Setup.common\Setup.ico" />
+    <Image Include="..\Setup.common\small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="flags1.bin" />
-    <None Include="update.zip" />
+    <None Include="..\Setup.common\flags1.bin" />
+    <None Include="..\Setup.common\update.zip" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

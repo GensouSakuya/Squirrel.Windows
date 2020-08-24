@@ -494,12 +494,7 @@ namespace Squirrel.Json
     /// All numbers are parsed to doubles.
     /// </summary>
     [GeneratedCode("simple-json", "1.0.0")]
-#if SIMPLE_JSON_INTERNAL
-    internal
-#else
-    public
-#endif
- static class SimpleJson
+    public static class SimpleJson
     {
         private const int TOKEN_NONE = 0;
         private const int TOKEN_CURLY_OPEN = 1;
@@ -1224,12 +1219,7 @@ namespace Squirrel.Json
     }
     
     [GeneratedCode("simple-json", "1.0.0")]
-#if SIMPLE_JSON_INTERNAL
-    internal
-#else
-    public
-#endif
- interface IJsonSerializerStrategy
+    public interface IJsonSerializerStrategy
     {
         [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification="Need to support .NET 2")]
         bool TrySerializeNonPrimitiveObject(object input, out object output);
@@ -1237,12 +1227,7 @@ namespace Squirrel.Json
     }
 
     [GeneratedCode("simple-json", "1.0.0")]
-#if SIMPLE_JSON_INTERNAL
-    internal
-#else
-    public
-#endif
- class PocoJsonSerializerStrategy : IJsonSerializerStrategy
+    public class PocoJsonSerializerStrategy : IJsonSerializerStrategy
     {
         internal IDictionary<Type, ReflectionUtils.ConstructorDelegate> ConstructorCache;
         internal IDictionary<Type, IDictionary<string, ReflectionUtils.GetDelegate>> GetCache;
@@ -1516,12 +1501,8 @@ namespace Squirrel.Json
 
 #if SIMPLE_JSON_DATACONTRACT
     [GeneratedCode("simple-json", "1.0.0")]
-#if SIMPLE_JSON_INTERNAL
-    internal
-#else
-    public
 #endif
- class DataContractJsonSerializerStrategy : PocoJsonSerializerStrategy
+    public class DataContractJsonSerializerStrategy : PocoJsonSerializerStrategy
     {
         public DataContractJsonSerializerStrategy()
         {
@@ -1591,19 +1572,12 @@ namespace Squirrel.Json
         }
     }
 
-#endif
-
     namespace Reflection
     {
         // This class is meant to be copied into other libraries. So we want to exclude it from Code Analysis rules
  	    // that might be in place in the target project.
         [GeneratedCode("reflection-utils", "1.0.0")]
-#if SIMPLE_JSON_REFLECTION_UTILS_PUBLIC
-        public
-#else
-        internal
-#endif
- class ReflectionUtils
+        public class ReflectionUtils
         {
             private static readonly object[] EmptyObjects = new object[] { };
 

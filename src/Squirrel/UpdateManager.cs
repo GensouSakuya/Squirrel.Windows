@@ -99,15 +99,15 @@ namespace Squirrel
             return installHelpers.CreateUninstallerRegistryEntry(uninstallCmd, quietSwitch);
         }
 
-        public Task<RegistryKey> CreateUninstallerRegistryEntry()
+        public Task<RegistryKey> CreateUninstallerRegistryEntry(bool isPerMachine = false)
         {
-            var installHelpers = new InstallHelperImpl(applicationName, rootAppDirectory);
+            var installHelpers = new InstallHelperImpl(applicationName, rootAppDirectory, isPerMachine);
             return installHelpers.CreateUninstallerRegistryEntry();
         }
 
-        public void RemoveUninstallerRegistryEntry()
+        public void RemoveUninstallerRegistryEntry(bool isPerMachine = false)
         {
-            var installHelpers = new InstallHelperImpl(applicationName, rootAppDirectory);
+            var installHelpers = new InstallHelperImpl(applicationName, rootAppDirectory, isPerMachine);
             installHelpers.RemoveUninstallerRegistryEntry();
         }
 
@@ -245,6 +245,28 @@ namespace Squirrel
             assemblyLocation = assemblyLocation ?? assembly.Location;
 
             if (Path.GetFileName(assemblyLocation).Equals("update.exe", StringComparison.OrdinalIgnoreCase)) {
+                // NB: Both the "SquirrelTemp" case and the "App's folder" case 
+                // mean that the root app dir is one up
+                var oneFolderUpFromAppFolder = Path.Combine(Path.GetDirectoryName(assemblyLocation), "..");
+                return Path.GetFullPath(oneFolderUpFromAppFolder);
+            }
+
+            var twoFoldersUpFromAppFolder = Path.Combine(Path.GetDirectoryName(assemblyLocation), "..\\..");
+            return Path.GetFullPath(twoFoldersUpFromAppFolder);
+        }
+
+        public static string GetInstallToDirectory(string assemblyLocation = null, string installPath = null)
+        {
+            var assembly = Assembly.GetEntryAssembly();
+            if (assemblyLocation == null && assembly == null)
+            {
+                return installPath ?? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            }
+
+            assemblyLocation = assemblyLocation ?? assembly.Location;
+
+            if (Path.GetFileName(assemblyLocation).Equals("update.exe", StringComparison.OrdinalIgnoreCase))
+            {
                 // NB: Both the "SquirrelTemp" case and the "App's folder" case 
                 // mean that the root app dir is one up
                 var oneFolderUpFromAppFolder = Path.Combine(Path.GetDirectoryName(assemblyLocation), "..");

@@ -38,8 +38,8 @@ bool MachineInstaller::ShouldSilentInstall()
 	// more conservative approach, that if the package dir exists in any way, we're
 	// bailing out
 
-	// C:\Users\Username\AppData\Local\$pkgName
-	SHGetFolderPath(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, installFolder);
+	// C:\Program Files\$pkgName
+	SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, installFolder);
 	wcscat(installFolder, L"\\");
 	wcscat(installFolder, pkgName);
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Squirrel
 {
-    internal static class EnumerableExtensions
+    public static class EnumerableExtensions
     {
         public static IEnumerable<T> Return<T>(T value)
         {

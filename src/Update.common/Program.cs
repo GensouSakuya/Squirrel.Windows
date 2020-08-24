@@ -97,6 +97,7 @@ namespace Squirrel.Update
                 string icon = default(string);
                 string shortcutArgs = default(string);
                 string frameworkVersion = "net45";
+                bool isPerMachine = false;
                 bool shouldWait = false;
                 bool noMsi = (Environment.OSVersion.Platform != PlatformID.Win32NT);        // NB: WiX doesn't work under Mono / Wine
                 bool noDelta = false;
@@ -134,6 +135,7 @@ namespace Squirrel.Update
                     { "no-msi", "Don't generate an MSI package", v => noMsi = true},
                     { "no-delta", "Don't generate delta packages to save time", v => noDelta = true},
                     { "framework-version=", "Set the required .NET framework version, e.g. net461", v => frameworkVersion = v },
+                    { "per-machine","Generate a Per-Machine Install package", _=> isPerMachine = true }
                 };
 
                 opts.Parse(args);
@@ -155,11 +157,11 @@ namespace Squirrel.Update
                         AnimatedGifWindow.ShowWindow(TimeSpan.FromSeconds(4), animatedGifWindowToken.Token, progressSource);
                     }
 
-                    Install(silentInstall, progressSource, Path.GetFullPath(target)).Wait();
+                    Install(silentInstall, progressSource, Path.GetFullPath(target), isPerMachine).Wait();
                     animatedGifWindowToken.Cancel();
                     break;
                 case UpdateAction.Uninstall:
-                    Uninstall().Wait();
+                    Uninstall(isPerMachine: isPerMachine).Wait();
                     break;
                 case UpdateAction.Download:
                     Console.WriteLine(Download(target).Result);
@@ -184,7 +186,7 @@ namespace Squirrel.Update
                     break;
 #endif
                 case UpdateAction.Releasify:
-                    Releasify(target, releaseDir, packagesDir, bootstrapperExe, backgroundGif, signingParameters, baseUrl, setupIcon, !noMsi, frameworkVersion, !noDelta);
+                    Releasify(target, releaseDir, packagesDir, bootstrapperExe, backgroundGif, signingParameters, baseUrl, setupIcon, !noMsi, frameworkVersion, !noDelta, isPerMachine);
                     break;
                 }
             }
@@ -192,12 +194,12 @@ namespace Squirrel.Update
             return 0;
         }
 
-        public async Task Install(bool silentInstall, ProgressSource progressSource, string sourceDirectory = null)
+        public async Task Install(bool silentInstall, ProgressSource progressSource, string sourceDirectory = null, bool isPerMachine = false)
         {
             sourceDirectory = sourceDirectory ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var releasesPath = Path.Combine(sourceDirectory, "RELEASES");
 
-            this.Log().Info("Starting install, writing to {0}", sourceDirectory);
+            this.Log().Info("Starting install, writing to {0}, is per machine:{1}", sourceDirectory, isPerMachine);
 
             if (!File.Exists(releasesPath)) {
                 this.Log().Info("RELEASES doesn't exist, creating it at " + releasesPath);
@@ -234,7 +236,7 @@ namespace Squirrel.Update
 
                 await mgr.FullInstall(silentInstall, progressSource.Raise);
 
-                await this.ErrorIfThrows(() => mgr.CreateUninstallerRegistryEntry(),
+                await this.ErrorIfThrows(() => mgr.CreateUninstallerRegistryEntry(isPerMachine),
                     "Failed to create uninstaller registry entry");
             }
         }
@@ -332,18 +334,19 @@ namespace Squirrel.Update
             }
         }
 
-        public async Task Uninstall(string appName = null)
+        public async Task Uninstall(string appName = null,bool isPerMachine = false)
         {
             this.Log().Info("Starting uninstall for app: " + appName);
 
             appName = appName ?? getAppNameFromDirectory();
             using (var mgr = new UpdateManager("", appName)) {
                 await mgr.FullUninstall();
-                mgr.RemoveUninstallerRegistryEntry();
+                mgr.RemoveUninstallerRegistryEntry(isPerMachine);
             }
         }
 
-        public void Releasify(string package, string targetDir = null, string packagesDir = null, string bootstrapperExe = null, string backgroundGif = null, string signingOpts = null, string baseUrl = null, string setupIcon = null, bool generateMsi = true, string frameworkVersion = null, bool generateDeltas = true)
+        public void Releasify(string package, string targetDir = null, string packagesDir = null, string bootstrapperExe = null, string backgroundGif = null,
+            string signingOpts = null, string baseUrl = null, string setupIcon = null, bool generateMsi = true, string frameworkVersion = null, bool generateDeltas = true, bool isPerMachine = false)
         {
             ensureConsole();
 
@@ -357,9 +360,10 @@ namespace Squirrel.Update
                 }
             }
 
+            var setupFileName = isPerMachine ? "Setup.Admin.exe" : "Setup.exe";
             targetDir = targetDir ?? Path.Combine(".", "Releases");
             packagesDir = packagesDir ?? ".";
-            bootstrapperExe = bootstrapperExe ?? Path.Combine(".", "Setup.exe");
+            bootstrapperExe = bootstrapperExe ?? Path.Combine(".", setupFileName);
 
             if (!Directory.Exists(targetDir)) {
                 Directory.CreateDirectory(targetDir);
@@ -368,7 +372,7 @@ namespace Squirrel.Update
             if (!File.Exists(bootstrapperExe)) {
                 bootstrapperExe = Path.Combine(
                     Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),
-                    "Setup.exe");
+                    setupFileName);
             }
 
             this.Log().Info("Bootstrapper EXE found at:" + bootstrapperExe);
@@ -440,7 +444,7 @@ namespace Squirrel.Update
 
             ReleaseEntry.WriteReleaseFile(releaseEntries, releaseFilePath);
 
-            var targetSetupExe = Path.Combine(di.FullName, "Setup.exe");
+            var targetSetupExe = Path.Combine(di.FullName, setupFileName);
             var newestFullRelease = releaseEntries.MaxBy(x => x.Version).Where(x => !x.IsDelta).First();
 
             File.Copy(bootstrapperExe, targetSetupExe, true);
