@@ -96,7 +96,7 @@ namespace Squirrel
 
             var package = new ZipPackage(InputPackageFile);
 
-            var dontcare = default(SemanticVersion);
+            //var dontcare = default(SemanticVersion);
 
             // NB: Our test fixtures use packages that aren't SemVer compliant, 
             // we don't really care that they aren't valid
