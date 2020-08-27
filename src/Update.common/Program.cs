@@ -71,9 +71,11 @@ namespace Squirrel.Update
             */
 #endif
 
-            using (Disposable.Create(() => animatedGifWindowToken.Cancel())) {
+            using (Disposable.Create(() => animatedGifWindowToken.Cancel()))
+            {
 
-                this.Log().Info("Starting Squirrel Updater: " + String.Join(" ", args));
+                this.Log().Info("Starting Squirrel Updater: " + String.Join(" ", args) + " is runasadmin:" +
+                                IsAdministrator());
 
                 if (args.Any(x => x.StartsWith("/squirrel", StringComparison.OrdinalIgnoreCase))) {
                     // NB: We're marked as Squirrel-aware, but we don't want to do
@@ -402,6 +404,7 @@ namespace Squirrel.Update
                         .Where(x => !x.Name.ToLowerInvariant().Contains("squirrel.exe"))
                         .Where(x => Utility.IsFileTopLevelInPackage(x.FullName, pkgPath))
                         .Where(x => Utility.ExecutableUsesWin32Subsystem(x.FullName))
+                        .Where(x=> SquirrelStubDetector.GetPESquirrelSquirrelStub(x.FullName) >= 1)
                         .ForEachAsync(x => createExecutableStubForExe(x.FullName))
                         .Wait();
 
@@ -844,6 +847,12 @@ namespace Squirrel.Update
 
             NativeMethods.GetStdHandle(StandardHandles.STD_ERROR_HANDLE);
             NativeMethods.GetStdHandle(StandardHandles.STD_OUTPUT_HANDLE);
+        }
+        static bool IsAdministrator()
+        {
+            var current = System.Security.Principal.WindowsIdentity.GetCurrent();
+            var windowsPrincipal = new System.Security.Principal.WindowsPrincipal(current);
+            return windowsPrincipal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
         }
     }
 

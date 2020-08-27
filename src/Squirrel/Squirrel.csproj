@@ -95,6 +95,7 @@
     <Compile Include="ShellFile.cs" />
     <Compile Include="SimpleJson\SimpleJson.cs" />
     <Compile Include="SquirrelAwareApp.cs" />
+    <Compile Include="SquirrelStubDetector.cs" />
     <Compile Include="SquirrelAwareExecutableDetector.cs" />
     <Compile Include="TaskbarHelper.cs" />
     <Compile Include="TrayHelper.cs" />
