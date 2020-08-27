@@ -43,6 +43,8 @@ namespace version {
 			if (l.minor < r.minor) return -1;
 			if (l.patch > r.patch) return 1;
 			if (l.patch < r.patch) return -1;
+			if (l.revision > r.revision) return 1;
+			if (l.revision < r.revision) return -1;
 			return 0;
 		}
 

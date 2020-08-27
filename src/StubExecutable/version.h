@@ -67,6 +67,7 @@ namespace version {
 		int major; ///< Major version, change only on incompatible API modifications.
 		int minor; ///< Minor version, change on backwards-compatible API modifications.
 		int patch; ///< Patch version, change only on bugfixes.
+		int revision;
 
 		/// Optional series of prerelease identifiers.
 		Prerelease_identifiers prerelease_ids;

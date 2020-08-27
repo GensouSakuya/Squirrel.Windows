@@ -53,7 +53,7 @@ std::wstring FindLatestAppDir()
 		return NULL;
 	}
 
-	version::Semver200_version acc("0.0.0");
+	version::Semver200_version acc("0.0.0.0");
 	std::wstring acc_s;
 
 	do {
@@ -73,7 +73,7 @@ std::wstring FindLatestAppDir()
 		}
 	} while (FindNextFile(hFile, &fileInfo));
 
-	if (acc == version::Semver200_version("0.0.0")) {
+	if (acc == version::Semver200_version("0.0.0.0")) {
 		return NULL;
 	}
 

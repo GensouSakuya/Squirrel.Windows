@@ -39,7 +39,7 @@ namespace version {
 
 	namespace {
 		enum class Parser_state {
-			major, minor, patch, prerelease, build
+			major, minor, patch ,revision, prerelease, build
 		};
 
 		using Validator = function<void(const string&, const char)>;
@@ -142,6 +142,7 @@ namespace version {
 		string major;
 		string minor;
 		string patch;
+		string revision;
 		string prerelease_id;
 		string build_id;
 		Prerelease_identifiers prerelease;
@@ -165,6 +166,11 @@ namespace version {
 			mkx('.', Parser_state::patch, {})
 		};
 		auto patch_trans = {
+			mkx('.', Parser_state::revision, {}),
+			mkx('-', Parser_state::prerelease, {}),
+			mkx('+', Parser_state::build, {})
+		};
+		auto revision_trans = {
 			mkx('-', Parser_state::prerelease, {}),
 			mkx('+', Parser_state::build, {})
 		};
@@ -183,6 +189,7 @@ namespace version {
 			{Parser_state::major, State{major_trans, major, normal_version_validator}},
 			{Parser_state::minor, State{minor_trans, minor, normal_version_validator}},
 			{Parser_state::patch, State{patch_trans, patch, normal_version_validator}},
+			{Parser_state::revision, State{revision_trans, revision, normal_version_validator}},
 			{Parser_state::prerelease, State{prerelease_trans, prerelease_id, prerelease_version_validator}},
 			{Parser_state::build, State{build_trans, build_id, prerelease_version_validator}}
 		};
@@ -202,7 +209,7 @@ namespace version {
 		}
 
 		try {
-			return Version_data{ stoi(major), stoi(minor), stoi(patch), prerelease, build };
+			return Version_data{ stoi(major), stoi(minor), stoi(patch), stoi(revision), prerelease, build };
 		} catch (invalid_argument& ex) {
 			throw Parse_error(ex.what());
 		}
