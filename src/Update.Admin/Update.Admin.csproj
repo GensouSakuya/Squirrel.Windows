@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs">
-      <Link>..\Update.common\Properties\SolutionAssemblyInfo.cs</Link>
+      <Link>..\SolutionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="..\Update.common\AnimatedGifWindow.cs" />
     <Compile Include="..\Update.common\AuthenticodeTools.cs" />
