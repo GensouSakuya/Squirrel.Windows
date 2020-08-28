@@ -169,7 +169,7 @@ namespace Squirrel.Update
                     Console.WriteLine(Download(target).Result);
                     break;
                 case UpdateAction.Update:
-                    Update(target).Wait();
+                    Update(target, isPerMachine: isPerMachine).Wait();
                     break;
                 case UpdateAction.CheckForUpdate:
                     Console.WriteLine(CheckForUpdate(target).Result);
@@ -243,7 +243,7 @@ namespace Squirrel.Update
             }
         }
 
-        public async Task Update(string updateUrl, string appName = null)
+        public async Task Update(string updateUrl, string appName = null, bool isPerMachine = false)
         {
             appName = appName ?? getAppNameFromDirectory();
 
@@ -272,7 +272,7 @@ namespace Squirrel.Update
                 var updateTarget = Path.Combine(mgr.RootAppDirectory, "Update.exe");
 
                 await this.ErrorIfThrows(() =>
-                    mgr.CreateUninstallerRegistryEntry(),
+                    mgr.CreateUninstallerRegistryEntry(isPerMachine),
                     "Failed to create uninstaller registry entry");
             }
         }
