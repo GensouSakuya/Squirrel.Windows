@@ -163,11 +163,14 @@
     <ClCompile Include="..\Setup.common\MachineInstaller.cpp" />
     <ClCompile Include="..\Setup.common\unzip.cpp" />
     <ClCompile Include="..\Setup.common\UpdateRunner.cpp" />
-    <ClCompile Include="..\Setup.common\winmain.cpp" />
     <ClCompile Include="..\Setup.common\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CIBuild|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="winmain.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

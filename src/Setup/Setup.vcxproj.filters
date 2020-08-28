@@ -15,70 +15,68 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="..\Setup.common\FxHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="..\Setup.common\MachineInstaller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="..\Setup.common\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Setup.h">
+    <ClInclude Include="..\Setup.common\Setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FxHelper.h">
+    <ClInclude Include="..\Setup.common\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="unzip.h">
+    <ClInclude Include="..\Setup.common\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UpdateRunner.h">
+    <ClInclude Include="..\Setup.common\unzip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MachineInstaller.h">
+    <ClInclude Include="..\Setup.common\UpdateRunner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\Setup.common\FxHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Setup.common\MachineInstaller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Setup.common\unzip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Setup.common\UpdateRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Setup.common\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FxHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="unzip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UpdateRunner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MachineInstaller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Setup.rc">
+    <ResourceCompile Include="..\Setup.common\Setup.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
+    <Image Include="..\Setup.common\Setup.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Setup.ico">
+    <Image Include="..\Setup.common\small.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="update.zip">
+    <None Include="..\Setup.common\flags1.bin">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="flags1.bin">
-      <Filter>Resource Files</Filter>
-    </None>
+    <None Include="..\Setup.common\update.zip" />
   </ItemGroup>
 </Project>

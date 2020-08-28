@@ -53,10 +53,10 @@
     <ClCompile Include="..\Setup.common\UpdateRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Setup.common\winmain.cpp">
+    <ClCompile Include="..\Setup.common\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Setup.common\stdafx.cpp">
+    <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

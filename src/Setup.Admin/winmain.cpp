@@ -1,11 +1,11 @@
 // Setup.cpp : Defines the entry point for the application.
 //
 
-#include "stdafx.h"
-#include "Setup.h"
-#include "FxHelper.h"
-#include "UpdateRunner.h"
-#include "MachineInstaller.h"
+#include "../Setup.common/stdafx.h"
+#include "../Setup.common/Setup.h"
+#include "../Setup.common/FxHelper.h"
+#include "../Setup.common/UpdateRunner.h"
+#include "../Setup.common/MachineInstaller.h"
 #include <cstdio>
 #include <string>
 
@@ -117,7 +117,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//	goto out;
 	//}
 
-	exitCode = CUpdateRunner::ExtractUpdaterAndRun(lpCmdLine, false, NULL, weAreUACElevated);
+	exitCode = CUpdateRunner::ExtractUpdaterAndRun(lpCmdLine, false, NULL, true);
 
 out:
 	_Module->Term();
