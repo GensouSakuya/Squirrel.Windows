@@ -75,6 +75,8 @@ namespace Squirrel
             }
         }
 
+        [IgnoreDataMember] public string PackageId => PackageName?.Replace(' ', '.');
+
         public string GetReleaseNotes(string packageDirectory)
         {
             var zp = new ZipPackage(Path.Combine(packageDirectory, Filename));

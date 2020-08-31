@@ -67,7 +67,7 @@ namespace Squirrel
 
                         if (latestLocalRelease != null) {
                             uri = Utility.AddQueryParamsToUri(uri, new Dictionary<string, string> {
-                                { "id", latestLocalRelease.PackageName },
+                                { "id", latestLocalRelease.PackageId },
                                 { "localVersion", latestLocalRelease.Version.ToString() },
                                 { "arch", Environment.Is64BitOperatingSystem ? "amd64" : "x86" }
                             });
