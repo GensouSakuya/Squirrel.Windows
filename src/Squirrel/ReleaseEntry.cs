@@ -68,9 +68,10 @@ namespace Squirrel
         public string PackageName {
             get {
                 var match = packageNameRegex.Match(Filename);
-                return match.Success ? 
-                    match.Groups[1].Value : 
-                    Filename.Substring(0, Filename.IndexOfAny(new[] { '-', '.' }));
+                return match.Success
+                    ? match.Groups[1].Value
+                    : Filename.Substring(0, Filename.IndexOfAny(new[] {'-'}))
+                        .Replace('.', ' ');
             }
         }
 
