@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using NuGet;
 using Splat;
 using System.Reflection;
+using System.IO.Compression;
 
 namespace Squirrel
 {
@@ -84,6 +85,26 @@ namespace Squirrel
                         this.Log().InfoException("Couldn't write uninstall icon, don't care", ex);
                     } finally {
                         File.Delete(targetPng);
+                    }
+                }
+                else if (zp.IconUrl == null && !File.Exists(targetIco))
+                {
+                    try
+                    {
+                        using (var stream = File.OpenRead(pkgPath))
+                        {
+                            var p = new ZipArchive(stream);
+                            var iconFile = p.GetEntry(@"app.ico");
+                            if (iconFile != null)
+                            {
+                                iconFile.ExtractToFile(targetIco, true);
+                            }
+                        }
+                        key.SetValue("DisplayIcon", targetIco, RegistryValueKind.String);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Log().InfoException("Couldn't write uninstall icon by extracting pkg, don't care", ex);
                     }
                 }
 
