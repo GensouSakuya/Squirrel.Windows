@@ -12,6 +12,8 @@ using NuGet;
 using Splat;
 using System.Reflection;
 using System.IO.Compression;
+using System.Management;
+using System.ServiceProcess;
 
 namespace Squirrel
 {
@@ -162,9 +164,40 @@ namespace Squirrel
                     })
                     .ForEach(x => {
                         try {
-                            this.WarnIfThrows(() => Process.GetProcessById(x.Item2).Kill());
+                            this.WarnIfThrows(() =>
+                            {
+                                try
+                                {
+                                    if (IsService(x.Item2, out var serviceName))
+                                        StopService(serviceName);
+                                }
+                                catch { }
+                                Process.GetProcessById(x.Item2).Kill();
+                            });
                         } catch {}
                     });
+            }
+
+            private static bool IsService(int pID, out string serviceName)
+            {
+                serviceName = null;
+                using (ManagementObjectSearcher Searcher = new ManagementObjectSearcher(
+                    "SELECT * FROM Win32_Service WHERE ProcessId =" + "\"" + pID + "\""))
+                {
+                    foreach (ManagementObject service in Searcher.Get())
+                    {
+                        serviceName = service["Name"]?.ToString();
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            private static void StopService(string serviceName)
+            {
+                if (string.IsNullOrWhiteSpace(serviceName))
+                    return;
+                ServiceController.GetServices().FirstOrDefault(p => p.ServiceName == serviceName)?.Stop();
             }
 
             public Task<RegistryKey> CreateUninstallerRegistryEntry()
